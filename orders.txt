@@ -9,3 +9,63 @@ Items: Chocolate Brownie, Donuts, Ice Cream Sundae,
 Total: Rs. 300
 Transaction ID: TXN1001
 -----------------------
+Customer: dhanashree
+Restaurant:  🍔 Burger Hub   
+Items: Onion Rings, Coke, 
+Total: Rs. 180
+Transaction ID: TXN1001
+-----------------------
+Customer: kp
+Restaurant:  🍔 Burger Hub   
+Items: Veg Burger, Cheese Burger, French Fries, Onion Rings, Cold Coffee, 
+Total: Rs. 600
+Transaction ID: TXN1001
+-----------------------
+Customer: Jiya
+Restaurant:  🍜 Noodle Treat 
+Items: Veg Hakka Noodles, Veg Manchurian, 
+Total: Rs. 330
+Transaction ID: TXN1001
+-----------------------
+Customer: Harsh
+Restaurant:  🍢 Spicy Tandoor
+Items: Butter Chicken, Garlic Naan, Garlic Naan, Gulab Jamun, 
+Total: Rs. 440
+Transaction ID: TXN1001
+-----------------------
+Customer: Dev
+Restaurant: 🍴 Dosa Darbaar  
+Items: Plain Dosa, Onion Dosa, Filter Coffee, 
+Total: Rs. 230
+Transaction ID: 
+-----------------------
+Customer: riya
+Restaurant:  🍔 Burger Hub   
+Items: Cheese Burger, Onion Rings, Cold Coffee, 
+Total: Rs. 360
+Transaction ID: TXN1001
+-----------------------
+Customer: Akshar
+Restaurant:  🌾 Rice Dice     
+Items: Chicken Biryani, Raita, Papad, 
+Total: Rs. 300
+Transaction ID: TXN1002
+-----------------------
+Customer: Akshar
+Restaurant:  🌾 Rice Dice     
+Items: Chicken Biryani, Raita, Papad, 
+Total: Rs. 300
+Transaction ID: TXN1003
+-----------------------
+Customer: Nisha
+Restaurant:  🍽️ Grill & Thrill
+Items: Iced Peach Tea, BBQ Chicken Wings (6 pcs), Grilled Veg Platter, Corn on the Cob (2pcs), Mint Yogurt Dip, 
+Total: Rs. 755
+Transaction ID: 
+-----------------------
+Customer: Sayali
+Restaurant:  🍕 Pizza Planet 
+Items: Paneer Pizza, Garlic Bread, Jalpeno Poppers, Chocolate Brownie, 
+Total: Rs. 610
+Transaction ID: TXN1004
+-----------------------
