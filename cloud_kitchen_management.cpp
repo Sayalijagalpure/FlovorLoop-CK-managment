@@ -7,6 +7,8 @@
 #include <thread>        //to allow multi tasking
 #include <chrono>        //to handle time(delays)
 #include <fstream>      //to handle file operations
+
+
 using namespace std;
 
 class Entity // base class1
@@ -29,16 +31,16 @@ public:
 
   void displayMenu() const // function to display menu
   {
-    cout << "\nMenu of" << name << endl;
+    std::cout << "\nMenu of" << name << endl;
     for (size_t i = 0; i < menu.size(); i++) // for loop (size_t is used to avoid negative values)
     {
-      cout << i + 1 << ". " << menu[i] << " - Rs. " << price[i] << endl; // i+1 to start from 1 instead of 0
+      std::cout << i + 1 << ". " << menu[i] << " - Rs. " << price[i] << endl; // i+1 to start from 1 instead of 0
     }
   }
 
   void display() const override // use of polymorphism to override base class function
   {
-    cout << " Cloud Kitchen outlets: " << name << endl;
+    std::cout << " Cloud Kitchen outlets: " << name << endl;
   }
 };
 
@@ -59,18 +61,19 @@ public:
 
   void display() const override // use of polymorphism to override base class function
   {
-    cout << "\nYour current order(" << name << ")" << endl;
+    std::cout << "\nYour current order(" << name << ")" << endl;
     for (auto &item : items)
     {
-      cout << " ◉ " << item << endl;
+      std::cout << " ◉ " << item << endl;
     }
-    cout << "Total: Rs. " << total << endl;
-    cout << "Payment Mode: " << paymentMode << endl;
+    std::cout << "Total: Rs. " << total << endl;
+    std::cout << "Payment Mode: " << paymentMode << endl;
     if (!transactionId.empty()) // useing Logical NOT operator to check if transaction Id is not empty
     {
-      cout << "Transaction ID: " << transactionId << endl;
+      std::cout << "Transaction ID: " << transactionId << endl;
     }
   }
+
   void saveOrder(const Orders& order, const string& username) {
   ofstream fout("orders.txt", ios::app);
   fout << "Customer: " << username << "\n";
@@ -82,6 +85,7 @@ public:
   fout << "-----------------------\n";
   fout.close();
 }
+
 
 };
 
@@ -116,7 +120,7 @@ public:
   {
     if (myOrders.empty()) // function to check if vector is empty
     {
-      cout << "No orders yet." << endl;
+      std::cout << "No orders yet." << endl;
       return;
     }
     for (auto &order : myOrders) // range based for loop to iterate through all orders
@@ -124,9 +128,7 @@ public:
       order.display(); // display function to show order details
     }
   }
-}; // <-- Properly close Customer class here
-
-// Removed duplicate CloudKitchen class definition
+}; 
 
 class CloudKitchen // base class3( main class of the application)
 {
@@ -167,27 +169,32 @@ void loadCustomers() {
         if (!pass.empty()) // if password is not empty
         {
           pass.pop_back(); // remove last character from password
-          cout << "\b \b"; // move cursor back, print space to erase character, move cursor back again
+          std::cout << "\b \b"; // move cursor back, print space to erase character, move cursor back again
         }
       }
       else
       {
         pass.push_back(ch); // add character to password
-        cout << "*";        // print * to indicate a characte has been entered
+        std::cout << "*";        // print * to indicate a characte has been entered
       }
     }
-    cout << endl; // move to next line after user presses Enter key
+    std::cout << endl; // move to next line after user presses Enter key
     return pass;  // return the entered password
   }
 
+public:
+  void addKitchen(const Kitchens &k) // function to add a new kitchen outlet
+  {
+    kitchens.push_back(k); // push_back function to add kitchen at the end of vector(list of kitchen outlets)
+  }
   void registerCustomer(const string &u) // function to register a new customer
   {
     if (customers.find(u) != customers.end()) //.find(u) checks if username already exists in the map, .end() represents "not found"
     {
-      cout << "Username already exists! Login to continue." << endl;
+      std::cout << "Username already exists! Login to continue." << endl;
       return; // return to main function if username already exists
     }
-    cout << "Enter password: ";
+    std::cout << "Enter password: ";
     string p = inputHiddenPassword();     // password is saved in string p
     customers.emplace(u, Customer(u, p)); // emplace inserts object(customer)into the unordered_map without extra copying
 
@@ -196,7 +203,7 @@ void loadCustomers() {
     fout << u << " " << p << "\n";
     fout.close();
 
-    cout << "Registered successfully!" << endl;
+    std::cout << "Registered successfully!" << endl;
     loginCustomer(u); // automatically open login page after successful registration
   }
 
@@ -205,19 +212,19 @@ void loadCustomers() {
     auto it = customers.find(u); //.find(u) returns an iterator pointing to the key–value pair (like a pointer to {username to Customer}).
     if (it == customers.end())   // If iterator points to .end(), username was not found.
     {
-      cout << "No such user. Please register first." << endl;
+      std::cout << "No such user. Please register first." << endl;
       return;
     }
-    cout << "Enter password: ";
+    std::cout << "Enter password: ";
     string p = inputHiddenPassword(); // password is saved in string p
     if (it->second.login(u, p))
     {                              // second.login(u,p) accesses the customer object and calls its login method to verify credentials
       currentUser = &(it->second); // store the address of this Customer object into currentUser pointer.
-      cout << "Welcome, " << u << "!" << endl;
+      std::cout << "Welcome, " << u << "!" << endl;
     }
     else
     {
-      cout << "Invalid login." << endl;
+      std::cout << "Invalid login." << endl;
     }
   }
 
@@ -225,14 +232,14 @@ void loadCustomers() {
   {
     if (currentUser) //*currentUser is a pointer
     {
-      cout << "Logged out " << currentUser->getUsername() << "." << endl; // getUsername() returns the username of the currently logged in customer
+      std::cout << "Logged out " << currentUser->getUsername() << "." << endl; // getUsername() returns the username of the currently logged in customer
       currentUser = nullptr;                                              // pointer currentUser is null which means no one is logged in
     }
   }
   void showKitchens() const {
-        cout << "\nAvailable Kitchen outlets:\n";
+        std::cout << "\nAvailable Kitchen outlets:\n";
         for (size_t i = 0; i < kitchens.size(); i++) {
-            cout << i + 1 << ". " << kitchens[i].name << endl;
+            std::cout << i + 1 << ". " << kitchens[i].name << endl;
         }
     }
 
@@ -242,15 +249,15 @@ void loadCustomers() {
   {
     if (!currentUser) // to check if a user is logged in
     {
-      cout << "Please login to place an order!" << endl;
+      std::cout << "Please login to place an order!" << endl;
       return;
     }
     int kChoice;    // variable to store user's kitchen choice
-    cout << "Choose outlet number: ";
+    std::cout << "Choose outlet number: ";
     cin >> kChoice;
     if (kChoice < 1 || kChoice > kitchens.size()) // to check if the choice exists
     {
-      cout << "Invalid choice." << endl;
+      std::cout << "Invalid choice." << endl;
       return;
     }
     const Kitchens &k = kitchens[kChoice - 1]; // reference to the selected kitchen outlet
@@ -260,9 +267,9 @@ void loadCustomers() {
     while (true) // while loop to allow user to add multiple times
     {
       k.displayMenu();                                       // display menu of selected kitchen outlet
-      cout << k.menu.size() + 1 << ". Finish Order" << endl; // option to finish order
+      std::cout << k.menu.size() + 1 << ". Finish Order" << endl; // option to finish order
 
-      cout << "Select item number: ";
+      std::cout << "Select item number: ";
       int choice;
       cin >> choice;
       if (choice == k.menu.size() + 1) // if user chooses to finish order
@@ -274,25 +281,25 @@ void loadCustomers() {
       {
         items.push_back(k.menu[choice - 1]);                     // add selected item to order list
         total += k.price[choice - 1];                            // add price of the selected items to total
-        cout << k.menu[choice - 1] << " added to your order.\n"; // confirmation message
+        std::cout << k.menu[choice - 1] << " added to your order.\n"; // confirmation message
       }
       else
       {
-        cout << "Invalid item choice." << endl;
+        std::cout << "Invalid item choice." << endl;
       }
     }
     if (items.empty()) // checks if no items were selected
     {
-      cout << "No items selected." << endl;
+      std::cout << "No items selected." << endl;
       return;
     }
       // Display selected items before showing the total bill
-      cout << "\nFood items added to your list:" << endl;
+      std::cout << "\nFood items added to your list:" << endl;
       for (size_t i = 0; i < items.size(); ++i) {
-          cout << "  " << i + 1 << ". " << items[i] << " - Rs. " << k.price[k.menu.size() > i ? i : 0] << endl;
+          std::cout << "  " << i + 1 << ". " << items[i] << " - Rs. " << k.price[k.menu.size() > i ? i : 0] << endl;
       }
-    cout << "\nYour total bill is: Rs. " << total << endl;
-    cout << "\nChoose Payment Mode:" << endl
+    std::cout << "\nYour total bill is: Rs. " << total << endl;
+    std::cout << "\nChoose Payment Mode:" << endl
          << "1. Online (UPI)" << endl
          << "2. Cash on Delivery" << endl
          << "Enter choice: ";
@@ -303,7 +310,7 @@ void loadCustomers() {
     string upi;                                  // variable to store user's UPI ID if online payment is chosen
     if (payChoice == 1)                          // if user uses online payment
     {
-      cout << "Enter your UPI ID: ";
+      std::cout << "Enter your UPI ID: ";
       cin >> upi;
       transactionCounter++;                                  // incrementing transaction counter to ensure unique transaction ID for each transaction
       transactionId = "TXN" + to_string(transactionCounter); // generating transaction Id by concatenating(joining) "TXN" with the current value of transactionCounter converted to string using to_string function
@@ -318,7 +325,7 @@ void loadCustomers() {
     int action;                                                        // variable to store user's action choice
     while (true)                                                       // while loop to allow user to confirm, add more items, or cancel the order
     {
-      cout << "\n1. Confirm Order" << endl
+      std::cout << "\n1. Confirm Order" << endl
            << "2. Add More Items" << endl
            << "3. Cancel Order" << endl
            << "Choose option: ";
@@ -326,44 +333,44 @@ void loadCustomers() {
 
       if (action == 1) // if user chooses to confirm the order
       {
-        cout << "Processing payment..." << endl;              // simulating payment processing
+        std::cout << "Processing payment..." << endl;              // simulating payment processing
         std::this_thread::sleep_for(std::chrono::seconds(3)); // introducing a 3 seconds delay to mimic real-world payment processing time
-        cout << "Payment successful ✅" << endl;              // confirmation message
-        cout << "Order Accepted! 🎉" << endl;
+        std::cout << "Payment successful ✅" << endl;              // confirmation message
+        std::cout << "Order Accepted! 🎉" << endl;
         currentUser->addOrder(newOrder); // adding the confirmed order to the current user's order history
         newOrder.saveOrder(newOrder, currentUser->getUsername()); // save order to file
         break;
       }
       else if (action == 2) // if user chooses to add more items
       {
-        cout << "Select extra item (0 to stop): ";
+        std::cout << "Select extra item (0 to stop): ";
         int extra;
         cin >> extra;
         if (extra >= 1 && extra <= k.menu.size()) // to give valid range of extra item choice
         {
           newOrder.items.push_back(k.menu[extra - 1]); // add selected extra item to order list
           newOrder.total += k.price[extra - 1];        // add price of the selected extra item to total
-          cout << "Item added." << endl;
-          cout << "Updated total bill: Rs. " << newOrder.total << endl; // to display updated bill
+          std::cout << "Item added." << endl;
+          std::cout << "Updated total bill: Rs. " << newOrder.total << endl; // to display updated bill
           newOrder.display();                                           // display updated order list
         }
         else if (extra == 0) // if user enters ) to stop adding more items
         {
-          cout << "No more items added." << endl;
+          std::cout << "No more items added." << endl;
         }
         else
         {
-          cout << "Invalid choice." << endl;
+          std::cout << "Invalid choice." << endl;
         }
       }
       else if (action == 3) // if user chooses to cancel the order
       {
-        cout << "Order cancelled." << endl;
+        std::cout << "Order cancelled." << endl;
         break; // exit the loop and return to main menu
       }
       else
       {
-        cout << "Invalid option." << endl;
+        std::cout << "Invalid option." << endl;
       }
     }
   }
@@ -372,7 +379,7 @@ void loadCustomers() {
   {
     if (!currentUser) // to check if a user is logged in
     {
-      cout << "Login first!" << endl;
+      std::cout << "Login first!" << endl;
       return;
     }
     currentUser->showOrders(); // calling showOrders method of the currently logged in customer to display their order history
@@ -395,28 +402,28 @@ int main()
 
   while (true)
   {
-    cout << "\n----------🔄🍱🛵----- Flavor Loop Cloud Kitchen -----🛵🍱🔄----------\n";
-    cout << "Dive into the FlavorLoop — your go-to cloud kitchen for endless delicious loops of joy." << endl;
-    cout << "1. Register" << endl
+    std::cout << "\n----------🔄🍱🛵----- Flavor Loop Cloud Kitchen -----🛵🍱🔄----------\n";
+    std::cout << "Dive into the FlavorLoop — your go-to cloud kitchen for endless delicious loops of joy." << endl;
+    std::cout << "1. Register" << endl
          << "2. Login" << endl
          << "3. Show Kitchen Outlets" << endl
          << "4. Place Order" << endl
          << "5. Show My Orders" << endl
          << "6. Logout" << endl
          << "7. Exit" << endl;
-    cout << "Enter choice: ";
+    std::cout << "Enter choice: ";
     int ch;
     cin >> ch;
     string user;
     switch (ch)
     {
     case 1:
-      cout << "Enter username: ";
+      std::cout << "Enter username: ";
       cin >> user;
       app.registerCustomer(user);
       break;
     case 2:
-      cout << "Enter username: ";
+      std::cout << "Enter username: ";
       cin >> user;
       app.loginCustomer(user);
       break;
@@ -435,10 +442,10 @@ int main()
       app.logoutCustomer();
       break;
     case 7:
-      cout << "Exiting... Goodbye!" << endl;
+      std::cout << "Exiting... Goodbye!" << endl;
       return 0;
     default:
-      cout << "Invalid choice." << endl;
+      std::cout << "Invalid choice." << endl;
     }
   }
 }
