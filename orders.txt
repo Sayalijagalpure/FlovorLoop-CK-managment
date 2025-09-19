@@ -1,0 +1,11 @@
+Customer: sayali
+Restaurant:  🥗 Continental Cravings 
+Items: Mac & Cheese, Club Sandwich, Chocolate Mousse, 
+Total: Rs. 540
+-----------------------
+Customer: sia
+Restaurant:  🍩 Sweet Treats 
+Items: Chocolate Brownie, Donuts, Ice Cream Sundae, 
+Total: Rs. 300
+Transaction ID: TXN1001
+-----------------------
